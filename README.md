@@ -1,4 +1,4 @@
-# Simulación de interferencia de señal ycalidad de servicio en redes WLAN
+# Simulación de interferencia de señal y calidad de servicio en redes WLAN
 
 Integrantes:
 
