@@ -2,7 +2,6 @@ import numpy as np
 from AccessPoint import AccessPoint
 from Area import Area
 
-
 class Simulator:
     def __init__(self, width, height, AP, AP_config):
         self.width = width
@@ -26,7 +25,7 @@ class Simulator:
 
     def startSimulator(self):
         self.accessPoint()
-        self.area.drawArea()
+        self.area.drawArea(self.AP_list)
 
 AP_config = [np.array([1,1]), 2.4e9, 20, np.array([11,11]), 5e9, 20]
 

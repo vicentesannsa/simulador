@@ -6,7 +6,7 @@ class Area:
         self.width = width
         self.height = height
 
-    def drawArea(self):
+    def drawArea(self, AP_positions):
         fig, ax = plt.subplots()
 
         #Crear el rectángulo
@@ -14,6 +14,10 @@ class Area:
 
         #Agregar el rectángulo al gráfico
         ax.add_patch(rect)
+
+        for AP in AP_positions:
+            coordinates = AP.getPosition()
+            ax.scatter(coordinates[0], coordinates[1], color='blue')
 
         #Personalizar el gráfico
         ax.set_xlim(0, 100)

@@ -8,6 +8,9 @@ class AccessPoint:
         self.power = power
         self.c = 299792458
 
+    def getPosition(self):
+        return self.position
+
     def info(self):
         return (self.id, self.position, self.frequency, self.power)
 
