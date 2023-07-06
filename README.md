@@ -25,9 +25,10 @@ Funciones:
 
 Atributos:
 
-1. position, determina la posición espacial del access point, es una tupla conformada por (x, y), su unidad es [m].
-2. frequency, determina la frecuencia de operación, su unidad es [Hz].
-3. power, determina la potencia de transmisión del access point, su unidad es [dBm]
+1. id, determina el identificador del access point
+2. position, determina la posición espacial del access point, es una tupla conformada por (x, y), su unidad es [m].
+3. frequency, determina la frecuencia de operación, su unidad es [Hz].
+4. power, determina la potencia de transmisión del access point, su unidad es [dBm]
 
 Funciones:
 
