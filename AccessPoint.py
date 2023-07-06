@@ -13,7 +13,7 @@ class AccessPoint:
         return self.position
 
     def info(self):
-        return (self.id, self.position, self.frequency, self.power)
+        return (self.id, self.position, self.frequency, self.power, self.bandwidth)
 
     def receivedPower(self, distance):
         L_dB = 20 * np.log10(self.frequency) + 20 * np.log10(distance) + 20 * np.log10(4 * np.pi / self.c) #La unidad del resultado es dB
