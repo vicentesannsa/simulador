@@ -32,3 +32,9 @@ Atributos:
 Funciones:
 
 1. receivedPower(distance)
+
+### Simulator
+
+1. width, determina el largo del área, su unidad es [m]
+2. height, determina el ancho del área, su unidad es [m]
+3. AP, determina la cantidad de access point dentro del simulador
