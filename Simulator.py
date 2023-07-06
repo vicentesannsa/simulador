@@ -1,13 +1,17 @@
 import numpy as np
+from matplotlib.animation import FuncAnimation
 from AccessPoint import AccessPoint
 from Area import Area
+from User import User
 
 class Simulator:
-    def __init__(self, width, height, AP, AP_config):
+    def __init__(self, width, height, AP, AP_config, users, noise_power):
         self.width = width
         self.height = height
         self.AP = AP
         self.AP_config = AP_config
+        self.users = users
+        self.noise_power = noise_power
         self.area = Area(self.width, self.height)
 
         self.AP_list = []
@@ -16,29 +20,35 @@ class Simulator:
             position = self.AP_config.pop(0)
             frequency = self.AP_config.pop(0)
             power = self.AP_config.pop(0)
+            bandwidth = self.AP_config.pop(0)
+            self.AP_list.append(AccessPoint(i, position, frequency, power, bandwidth))
 
-            self.AP_list.append(AccessPoint(i, position, frequency, power))
+        self.area.drawArea()
+        self.area.drawAP(self.AP_list)
+        self.area.drawUsers(self.users)
 
-    def accessPoint(self):
+        for user in self.users:
+            for AP in self.AP_list:
+                distance = np.linalg.norm(AP.position - user.position)
+                print(f"User {user.id} is connected to AP {AP.id} with bit rate {AP.bitRate(distance, self.noise_power)} bps")
+
+    def infoAP(self):
         for AP in self.AP_list:
             print(AP.info())
 
     def startSimulator(self):
-        self.accessPoint()
-        self.area.drawArea(self.AP_list)
+        self.infoAP()
+        self.anim = FuncAnimation(self.area.fig, self.update, frames=range(100), interval=200, repeat=False)
+        self.area.showArea()
+    
+    def update(self, frame):
+        for user, plot in zip(self.users, self.area.user_plots):
+            user.move(self.width, self.height)
+            plot.set_data(*user.position)
 
-AP_config = [np.array([1,1]), 2.4e9, 20, np.array([11,11]), 5e9, 20]
+AP_config = [np.array([40,20]), 2.4e9, 20, 20e6, np.array([11,11]), 5e9, 20, 20e6, np.array([60,40]), 2.4e9, 20, 20e6]
+noise_power = -100
+users = [User(i, np.array([np.random.uniform(30, 50), np.random.uniform(30, 50)])) for i in range(50)]
 
-simulator = Simulator(80, 50, 2, AP_config)
+simulator = Simulator(80, 50, 3, AP_config, users, noise_power)
 simulator.startSimulator()
-
-""" ap1_position = np.array([0, 0]) #m
-ap1_frequency = 2.4e9           #Hz
-ap1_power = 20                  #dBm
-
-ap1 = AccessPoint(1, ap1_position, ap1_frequency, ap1_power)
-
-distance = 35863e3
-power_received = ap1.receivedPower(distance)
-
-print(f"Potencia recibida en el punto a {distance} metros de distancia del AP1: {power_received} dB") """
